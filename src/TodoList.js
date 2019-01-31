@@ -10,12 +10,17 @@ class TodoList extends Component{
   }
   onChange(event){
     this.setState({
-      userInput: event.target.value
+        userInput: event.target.value
     })
   }
   addTodo(event){
       event.preventDefault(); // evite de reload le formulaire
-      this.state.items.push(this.state.userInput);
+      if (!this.state.userInput.replace(/\s/g, '').length) {
+      }
+      else {
+        this.state.items.push(this.state.userInput);
+      }
+
       this.setState({
         userInput: ''
       });
@@ -23,16 +28,11 @@ class TodoList extends Component{
   }
   renderTodos(){
     return this.state.items.map((item) => {
-      if (!item.replace(/\s/g, '').length) {
-        alert("vous devez saisir un mot");
-      }
-      else {
         return (
-          <div style={{margin: 20}} className="card card-body bg-light" key={item}>
-            {item}
+          <div style={{margin: 20, flexDirection: "row", justifyContent: "space-between"}} className="card card-body bg-light" key={item}>
+            {item} <button style={{width: "10%"}} className= "btn btn-danger">Retirer</button>
           </div>
         );
-      }
 
     });
   }
