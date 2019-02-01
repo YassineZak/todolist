@@ -5,7 +5,8 @@ class TodoList extends Component{
     super();
     this.state = {
       userInput: '',
-      items: []
+      items: [],
+      todoRemove: "test"
     }
   }
   onChange(event){
@@ -24,13 +25,21 @@ class TodoList extends Component{
       this.setState({
         userInput: ''
       });
-      console.log(this.state.items);
+  }
+  removeTodo(event){
+    const array = this.state.items;
+    const index = array.indexOf(event.target.firstChild.value);
+    array.splice(index, 1);
+    this.setState({
+      items: array,
+    })
   }
   renderTodos(){
     return this.state.items.map((item) => {
         return (
           <div style={{margin: 20, flexDirection: "row", justifyContent: "space-between"}} className="card card-body bg-light" key={item}>
-            {item} <button style={{width: "10%"}} className= "btn btn-danger">Retirer</button>
+            {item} <button style={{width: "10%"}} className= "btn btn-danger" onClick={this.removeTodo.bind(this)}><input type="hidden" value={item}/>Retirer</button>
+
           </div>
         );
 
